@@ -41,7 +41,7 @@ except URLError as e:
 
 sl.header("The fruit load list contains:")
 def get_fruit_load_list():
-         with my_cnx.cursor() as my_cur():
+         with my_cnx.cursor() as my_cur:
             my_cur.execute("SELECT * FROM pc_rivery_db.public.fruit_load_list")
             return my_cur.fetchall()
 
@@ -51,7 +51,7 @@ if sl.button('Get Fruit Load List'):
              sl.dataframe(my_data_rows)
 
 def insert_row(new_fruit):
-        with my_cnx.cursor() as my_cur():
+        with my_cnx.cursor() as my_cur:
              my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values ('from streamlit')")
              return 'Thanks for adding' + new_fruit
        
