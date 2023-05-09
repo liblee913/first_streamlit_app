@@ -22,7 +22,7 @@ fruits_selected = sl.multiselect("Pick some fruits:", list(my_fruit_list.index),
 fruits_to_show = my_fruit_list.loc[fruits_selected]
 sl.dataframe(fruits_to_show)
 
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+ "kiwi")
 sl.header("Fruityvice Fruit Advice!")
 
 #Normalises the response
