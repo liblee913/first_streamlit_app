@@ -43,5 +43,5 @@ sl.text("The fruit load list contains:")
 sl.text(my_data_rows)
 
 add_my_fruit = sl.text_input('What fruit would you like to add?')
-sl.write('Thanks for adding', fruit_choice)
+sl.write('Thanks for adding', add_my_fruit)
 
