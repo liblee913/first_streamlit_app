@@ -27,10 +27,17 @@ fruit_choice = sl.text_input('What fruit would you like information about?','Kiw
 sl.write('The user entered ', fruit_choice)
 
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+ fruit_choice)
-sl.header("Fruityvice Fruit Advice!")
-
-fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
-sl.dataframe(fruityvice_normalized)
+sl.header('Fruityvice Fruit Advice!')
+try:
+  fruit_choice = sl.text_input('What fruit would you like information about?')
+  if not fruit_choice:
+          sl.error('Please select fruit to get information')
+  else: 
+       fruityvice_response = requests.get('https://://fruityvice.com/api/fruit/'+ fruit_choice)
+       fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
+       sl.dataframe(fruityvice_normalized)
+except URLError as e:
+        sl.error()
 
 my_cnx = snowflake.connector.connect(**sl.secrets["snowflake"])
 my_cur = my_cnx.cursor()
@@ -45,16 +52,6 @@ sl.write('Thanks for adding', add_my_fruit)
 my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values ('from streamlit')")
 sl.stop()
 
-sl.header('Fruityvice Fruit Advice!')
-try:
-  fruit_choice = sl.text_input('What fruit would you like information about?')
-  if not fruit_choice:
-          sl.error('Please select fruit to get information')
-  else: 
-       fruityvice_response = requests.get('https://://fruityvice.com/api/fruit/'+ fruit_choice)
-       fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
-       sl.dataframe(fruityvice_normalized)
-except URLError as e:
-        sl.error()
+
         
     
