@@ -53,7 +53,7 @@ try:
   else: 
        fruityvice_response = requests.get('https://://fruityvice.com/api/fruit/'+ fruit_choice)
        fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
-        sl.dataframe(fruityvice_normalized)
+       sl.dataframe(fruityvice_normalized)
 except URLError as e:
         sl.error()
         
