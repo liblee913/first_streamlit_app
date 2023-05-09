@@ -16,9 +16,7 @@ sl.text('🥑🍞 Avocado Toast')
 sl.header('🍌🥭 Build Your Own Fruit Smoothie 🥝🍇')
 
 my_fruit_list = pd.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt")
-# Display the table on the page.
 my_fruit_list = my_fruit_list.set_index('Fruit')
-# Let's put a pick list here so they can pick the fruit they want to include 
 
 fruits_selected = sl.multiselect("Pick some fruits:", list(my_fruit_list.index), ['Avocado','Strawberries'])
 
@@ -31,9 +29,7 @@ sl.write('The user entered ', fruit_choice)
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+ fruit_choice)
 sl.header("Fruityvice Fruit Advice!")
 
-#Normalises the response
 fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
-# Able to read the response
 sl.dataframe(fruityvice_normalized)
 
 my_cnx = snowflake.connector.connect(**sl.secrets["snowflake"])
@@ -48,3 +44,17 @@ sl.write('Thanks for adding', add_my_fruit)
 
 my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values ('from streamlit')")
 sl.stop()
+
+sl.header('Fruityvice Fruit Advice!')
+try:
+  fruit_choice = sl.text_input('What fruit would you like information about?')
+  if not fruit_choice:
+          sl.error('Please select fruit to get information')
+  else: 
+       fruityvice_response = requests.get('https://://fruityvice.com/api/fruit/'+ fruit_choice)
+       fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
+        sl.dataframe(fruityvice_normalized)
+except URLError as e:
+        sl.error()
+        
+    
